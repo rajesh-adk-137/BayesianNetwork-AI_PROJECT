@@ -1,6 +1,6 @@
 import pandas as pd
 from scipy.stats import norm
-
+#
 # Function to estimate conditional probability distributions (CPDs) using Maximum Likelihood Estimation (MLE)
 def estimate_cpd_mle(df, node, parent_nodes):
     # Calculate relative frequencies for each combination of values
