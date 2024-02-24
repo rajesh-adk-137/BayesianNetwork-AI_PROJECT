@@ -1,0 +1,55 @@
+precipitation_mapping = {
+    'very_low': 1,
+    'low': 2,
+    'medium': 3,
+    'high': 4,
+    'very_high': 5
+}
+
+temperature_mapping = {
+    'very_low': 1,
+    'low': 2,
+    'medium': 3,
+    'high': 4,
+    'very_high': 5
+}
+
+wind_mapping = {
+    'very_low': 1,
+    'low': 2,
+    'medium': 3,
+    'high': 4,
+    'very_high': 5
+}
+
+weather_mapping = {
+    'sun': 1,
+    'snow': 2,
+    'rain': 3,
+    'drizzle': 4,
+    'fog': 5
+}
+
+
+
+
+
+
+Calculated Quintiles for Training Data:
+     precipitation  temp_max  temp_min  wind
+0.2           0.00      10.0       3.9   2.1
+0.4           0.15      13.3       6.7   2.7
+0.6           0.30      17.9      10.0   3.4
+0.8           4.30      23.3      13.3   4.3
+
+
+
+
+
+
+Calculated Quintiles for Testing Data:
+     precipitation  temp_max  temp_min  wind
+0.2           0.00       9.4      2.80   2.1
+0.4           0.15      13.3      6.58   2.6
+0.6           0.30      17.9     10.12   3.2
+0.8           3.80      24.4     13.30   4.3
