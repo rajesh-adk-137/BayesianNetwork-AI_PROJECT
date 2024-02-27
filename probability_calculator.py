@@ -46,5 +46,5 @@ def calculate_probabillity( weather , precipitation, max_temperature, min_temper
 
     return final_probability
 
-result = calculate_probabillity('sun',2,2,2,2, data = discrete_data, prior_probabilities=prior_probabilities)
+result = calculate_probabillity(1,2,2,2,2, data = discrete_data, prior_probabilities=prior_probabilities)
 print(result)
