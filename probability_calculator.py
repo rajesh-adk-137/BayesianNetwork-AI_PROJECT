@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+
 discrete_data = pd.read_csv('train_numerically_labelled.csv')
 columns = discrete_data.columns[1:]  #removing date
 length = len(discrete_data)
@@ -13,7 +14,7 @@ for column in columns:
 def prior_prob( variable , value):
     return prior_probabilities[variable][value-1]
 
-def calculate_probabillity( weather , precipitation, max_temperature, min_temperature, wind , data, prior_probabilities):
+def calculate_probabillity( precipitation, max_temperature, min_temperature, wind ,weather, data):
     parent_nodes = {
     'precipitation': ['temp_min'],
     'temp_max': [],
@@ -45,6 +46,3 @@ def calculate_probabillity( weather , precipitation, max_temperature, min_temper
             final_probability *= prior_prob( child , values[child])
 
     return final_probability
-
-result = calculate_probabillity(1,2,2,2,2, data = discrete_data, prior_probabilities=prior_probabilities)
-print(result)
