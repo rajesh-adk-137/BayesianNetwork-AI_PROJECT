@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-discrete_data = pd.read_csv('data/train_numerically_labelled.csv')
+discrete_data = pd.read_csv('../data/train_numerically_labelled.csv')
 columns = discrete_data.columns[1:]  # removing date
 length = len(discrete_data)
 
@@ -48,7 +48,7 @@ def calculate_probability(weather, precipitation, max_temperature, min_temperatu
 
     return final_probability
 
-output_file = "testing/probability_results.csv"
+output_file = "../testing/probability_results.csv"
 
 with open(output_file, 'w') as file:
     file.write("probability,weather,precipitation,max_temperature,min_temperature,wind\n")
