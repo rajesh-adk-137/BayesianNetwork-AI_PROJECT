@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-discrete_data = pd.read_csv('train_numerically_labelled.csv')
+discrete_data = pd.read_csv('data/train_numerically_labelled.csv')
 columns = discrete_data.columns[1:]  # removing date
 length = len(discrete_data)
 
@@ -48,7 +48,7 @@ def calculate_probability(weather, precipitation, max_temperature, min_temperatu
 
     return final_probability
 
-output_file = "probability_results.csv"
+output_file = "testing/probability_results.csv"
 
 with open(output_file, 'w') as file:
     file.write("probability,weather,precipitation,max_temperature,min_temperature,wind\n")
@@ -60,50 +60,3 @@ with open(output_file, 'w') as file:
                         probability = calculate_probability(weather, precipitation, max_temp, min_temp, wind, discrete_data, prior_probabilities)
                         file.write(f"{probability},{weather},{precipitation},{max_temp},{min_temp},{wind}\n")
                         print(f"Probability: {probability}, Weather: {weather}, Precipitation: {precipitation}, Max Temp: {max_temp}, Min Temp: {min_temp}, Wind: {wind}")
-
-# Now let's plot some graphs for visualization
-# First, let's load the data from the generated file
-
-df = pd.read_csv(output_file)
-
-# Plotting histograms for each parameter
-
-plt.figure(figsize=(10, 8))
-
-# Plot for Weather
-plt.subplot(2, 3, 1)
-plt.hist(df['weather'])
-plt.title('Weather Distribution')
-plt.xlabel('Weather')
-plt.ylabel('Frequency')
-
-# Plot for Precipitation
-plt.subplot(2, 3, 2)
-plt.hist(df['precipitation'])
-plt.title('Precipitation Distribution')
-plt.xlabel('Precipitation')
-plt.ylabel('Frequency')
-
-# Plot for Max Temperature
-plt.subplot(2, 3, 3)
-plt.hist(df['max_temperature'])
-plt.title('Max Temperature Distribution')
-plt.xlabel('Max Temperature')
-plt.ylabel('Frequency')
-
-# Plot for Min Temperature
-plt.subplot(2, 3, 4)
-plt.hist(df['min_temperature'])
-plt.title('Min Temperature Distribution')
-plt.xlabel('Min Temperature')
-plt.ylabel('Frequency')
-
-# Plot for Wind
-plt.subplot(2, 3, 5)
-plt.hist(df['wind'])
-plt.title('Wind Distribution')
-plt.xlabel('Wind')
-plt.ylabel('Frequency')
-
-plt.tight_layout()
-plt.show()
