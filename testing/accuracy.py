@@ -1,8 +1,8 @@
 import pandas as pd
 
 # Read the CSV files
-df_output = pd.read_csv('testing/prediction.csv')
-df_test = pd.read_csv('testing/testfile.csv')
+df_output = pd.read_csv('prediction.csv')
+df_test = pd.read_csv('testfile.csv')
 
 # Initialize a count variable to keep track of the correct predictions
 count = 0

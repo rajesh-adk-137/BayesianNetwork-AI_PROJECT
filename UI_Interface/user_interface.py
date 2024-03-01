@@ -1,17 +1,44 @@
 import tkinter as tk
 from tkinter import ttk
-import random
+import csv
+
+# Mapping of numerical weather code to weather description
+weather_mapping = {1: 'Sun', 2: 'Snow', 3: 'Rain', 4: 'Drizzle', 5: 'Fog'}
 
 # Function to generate a random weather prediction
 def predict_weather():
-    # Define possible weather conditions
-    weather_conditions = ["Sunny", "Rainy", "Foggy", "Snow", "Drizzle"]
-    # Generate a random index
-    random_index = random.randint(0, len(weather_conditions) - 1)
-    # Get a random weather prediction
-    predicted_weather = weather_conditions[random_index]
-    # Update the label with the predicted weather
-    output_label.config(text="Predicted Weather: " + predicted_weather)
+    # Get user inputs
+    precipitation = precipitation_var.get()
+    max_temp = max_temp_var.get()
+    min_temp = min_temp_var.get()
+    wind = wind_var.get()
+
+    # Map user inputs to numerical values
+    mapping = {'Very Low': 1, 'Low': 2, 'Medium': 3, 'High': 4, 'Very High': 5}
+    precipitation_num = mapping[precipitation]
+    max_temp_num = mapping[max_temp]
+    min_temp_num = mapping[min_temp]
+    wind_num = mapping[wind]
+
+    # Read CSV file and find matching weather
+    max_probability = 0
+    matching_weather_code = ""
+    with open('../testing/probability_results.csv', 'r') as file:
+        reader = csv.reader(file)
+        next(reader)  # Skip header
+        for row in reader:
+            if int(row[2]) == precipitation_num and int(row[3]) == max_temp_num \
+                    and int(row[4]) == min_temp_num and int(row[5]) == wind_num:
+                probability = float(row[0])
+                if probability > max_probability:
+                    max_probability = probability
+                    matching_weather_code = int(row[1])
+
+    # Get corresponding weather description
+    matching_weather = weather_mapping.get(matching_weather_code, "Unknown")
+
+    # Display matching weather in the Tkinter window
+    output_label.config(text="Predicted Weather with Maximum Probability: " + matching_weather)
 
 # Create the main application window
 root = tk.Tk()
@@ -36,16 +63,6 @@ style.map('TButton', background=[('active', '#388E3C')])  # Set button style whe
 
 # Function to handle button click
 def on_button_click():
-    # Get user inputs
-    precipitation = precipitation_var.get()
-    max_temp = max_temp_var.get()
-    min_temp = min_temp_var.get()
-    wind = wind_var.get()
-    # Display user inputs
-    print("Precipitation:", precipitation)
-    print("Max Temperature:", max_temp)
-    print("Min Temperature:", min_temp)
-    print("Wind:", wind)
     # Call function to predict weather
     predict_weather()
 
@@ -112,13 +129,13 @@ Wind:
 additional_info_label = ttk.Label(root, text=additional_info_text, background='#f0f0f0', foreground='black')
 additional_info_label.grid(row=2, column=0, columnspan=4, padx=10, pady=10)
 
+# Create label to display predicted weather
+output_label = ttk.Label(root, text="", background='#f0f0f0', foreground='black')
+output_label.grid(row=3, column=0, columnspan=4, padx=10, pady=5)
+
 # Create button to predict weather
 predict_button = ttk.Button(root, text="Predict Weather", command=on_button_click)
-predict_button.grid(row=3, column=0, columnspan=4, padx=10, pady=10, sticky="ew")
-
-# Label to display predicted weather
-output_label = ttk.Label(root, text="Predicted Weather: ", background='#f0f0f0', foreground='black')
-output_label.grid(row=4, column=0, columnspan=4, padx=10, pady=5)
+predict_button.grid(row=4, column=0, columnspan=4, padx=10, pady=10, sticky="ew")
 
 # Run the Tkinter event loop
 root.mainloop()
